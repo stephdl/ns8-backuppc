@@ -29,8 +29,8 @@ except:
         'port': 20000,
         'schema': 'rfc2307',
         'location': 'internal',
-        'base_dn': 'dc=nackuppc,dc=invalid',
-        'bind_dn': 'cn=example,dc=nackuppc,dc=invalid',
+        'base_dn': 'dc=backuppc,dc=invalid',
+        'bind_dn': 'cn=example,dc=backuppc,dc=invalid',
         'bind_password': 'invalid',
     }
 
