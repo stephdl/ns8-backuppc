@@ -21,6 +21,6 @@ for evar in [
     agent.set_env(evar, original_environment[evar])
 
 agent.set_env("LDAP_DOMAIN", original_environment.get("ldap_domain", ""))
-agent.set_env("AUTH_METHOD", 'BASIC' if original_environment.get("ldap_domain", "") == "" else 'LDAP')
+agent.set_env("AUTH_METHOD", 'BASIC' if original_environment.get("ldap_domain", "basic") == "basic" else 'LDAP')
 agent.set_env("AUTH_PASS", original_environment.get("auth_pass", ""))
 agent.set_env("AUTH_USER", original_environment.get("auth_user", ""))
