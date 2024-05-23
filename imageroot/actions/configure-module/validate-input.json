@@ -7,14 +7,20 @@
         {
             "host": "backuppc.domain.org",
             "http2https": true,
-            "lets_encrypt": true
+            "lets_encrypt": true,
+            "ldap_domain": "domain.org",
+            "auth_pass": "password",
+            "auth_user": "user"
         }
     ],
     "type": "object",
     "required": [
         "host",
         "http2https",
-        "lets_encrypt"
+        "lets_encrypt",
+        "ldap_domain",
+        "auth_pass",
+        "auth_user"
     ],
     "properties": {
         "host": {
@@ -32,6 +38,19 @@
             "type": "boolean",
             "title": "HTTP to HTTPS redirection",
             "description": "Redirect all the HTTP requests to HTTPS"
+        },
+        "ldap_domain": {
+            "type": "string",
+            "description": "LDAP domain name, like 'domain.org'",
+            "format": "hostname"
+        },
+        "auth_pass": {
+            "type": "string",
+            "description": "Password for the authentication"
+        },
+        "auth_user": {
+            "type": "string",
+            "description": "User for the authentication"
         }
     }
 }

@@ -7,14 +7,33 @@
         {
             "host": "backuppc.domain.org",
             "http2https": true,
-            "lets_encrypt": true
+            "lets_encrypt": true,
+            "ldap_domain": "domain.org",
+            "auth_pass": "password",
+            "auth_user": "user",
+            "user_domains_list": [
+                {
+                    "name": "rocky9-pve4.org",
+                    "label": "rocky9-pve4.org",
+                    "value": "rocky9-pve4.org"
+                },
+                {
+                    "name": "ad.rocky9-pve4.org",
+                    "label": "ad.rocky9-pve4.org",
+                    "value": "ad.rocky9-pve4.org"
+                }
+            ]
         }
     ],
     "type": "object",
     "required": [
         "host",
         "http2https",
-        "lets_encrypt"
+        "lets_encrypt",
+        "ldap_domain",
+        "auth_pass",
+        "auth_user",
+        "user_domains_list"
     ],
     "properties": {
         "host": {
@@ -31,6 +50,40 @@
             "type": "boolean",
             "title": "HTTP to HTTPS redirection",
             "description": "Redirect all the HTTP requests to HTTPS"
+        },
+        "ldap_domain": {
+            "type": "string",
+            "description": "LDAP domain name, like 'domain.org'"
+        },
+        "auth_pass": {
+            "type": "string",
+            "description": "Password for the authentication"
+        },
+        "auth_user": {
+            "type": "string",
+            "description": "User for the authentication"
+        },
+        "user_domains_list": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "label": {
+                        "type": "string"
+                    },
+                    "value": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "name",
+                    "label",
+                    "value"
+                ]
+            }
         }
     }
 }
