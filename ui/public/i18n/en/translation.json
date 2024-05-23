@@ -41,7 +41,7 @@
     "host_pattern": "Must be a valid fully qualified domain name",
     "host_format": "Must be a valid fully qualified domain name",
     "user_domains_list": "User domains list",
-    "choose_user_domains": "Choose LDAP or basic authentication",
+    "choose_user_domain": "Choose LDAP or basic authentication",
     "choose_the_user_domain_to_use": "You can decide to use a LDAP based authentication or a basic authentication for just one administrator",
     "auth_username": "Username",
     "auth_password": "Password",
