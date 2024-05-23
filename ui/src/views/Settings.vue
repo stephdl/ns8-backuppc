@@ -61,14 +61,49 @@
                 $t("settings.enabled")
               }}</template>
             </cv-toggle>
-              <!-- advanced options -->
-            <cv-accordion ref="accordion" class="maxwidth mg-bottom">
-              <cv-accordion-item :open="toggleAccordion[0]">
-                <template slot="title">{{ $t("settings.advanced") }}</template>
-                <template slot="content">
-                </template>
-              </cv-accordion-item>
-            </cv-accordion>
+            <NsComboBox
+              v-model.trim="ldap_domain"
+              :autoFilter="true"
+              :autoHighlight="true"
+              :title="$t('settings.user_domains_list')"
+              :label="$t('settings.choose_user_domain')"
+              :options="user_domains_list"
+              :userInputLabel="core.$t('settings.choose_user_domain')"
+              :acceptUserInput="false"
+              :showItemType="true"
+              :invalid-message="$t(error.ldap_domain)"
+              :disabled="loading.getConfiguration || loading.configureModule"
+              tooltipAlignment="start"
+              tooltipDirection="top"
+              ref="ldap_domain"
+            >
+              <template slot="tooltip">
+                {{ $t("settings.choose_the_user_domain_to_use") }}
+              </template>
+            </NsComboBox>
+            <template v-if="ldap_domain === 'basic'">
+              <cv-text-input
+                :label="$t('settings.auth_username')"
+                placeholder="backuppc"
+                v-model.trim="auth_user"
+                class="mg-bottom"
+                :invalid-message="$t(error.auth_user)"
+                :disabled="loading.getConfiguration || loading.configureModule"
+                ref="auth_user"
+              >
+              </cv-text-input>
+              <cv-text-input
+                :label="$t('settings.auth_password')"
+                placeholder="Nethesis,1234"
+                type="password"
+                v-model.trim="auth_pass"
+                class="mg-bottom"
+                :invalid-message="$t(error.auth_pass)"
+                :disabled="loading.getConfiguration || loading.configureModule"
+                ref="auth_pass"
+              >
+              </cv-text-input>
+            </template>
             <cv-row v-if="error.configureModule">
               <cv-column>
                 <NsInlineNotification
@@ -123,6 +158,10 @@ export default {
       },
       urlCheckInterval: null,
       host: "",
+      auth_user: "backuppc",
+      auth_pass: "Nethesis,1234",
+      ldap_domain: "",
+      user_domains_list: [],
       isLetsEncryptEnabled: false,
       isHttpToHttpsEnabled: true,
       loading: {
@@ -135,6 +174,9 @@ export default {
         host: "",
         lets_encrypt: "",
         http2https: "",
+        auth_user: "",
+        auth_pass: "",
+        ldap_domain: "",
       },
     };
   },
@@ -202,7 +244,17 @@ export default {
       this.host = config.host;
       this.isLetsEncryptEnabled = config.lets_encrypt;
       this.isHttpToHttpsEnabled = config.http2https;
-
+      this.auth_user = config.auth_user;
+      this.auth_pass = config.auth_pass;
+      this.$nextTick(() => {
+        this.ldap_domain = config.ldap_domain;
+      });
+      this.user_domains_list = config.user_domains_list;
+      this.user_domains_list.unshift({
+        name: "basic",
+        label: this.$t("settings.basic_authentication"),
+        value: "basic",
+      });
       this.loading.getConfiguration = false;
       this.focusElement("host");
     },
@@ -215,6 +267,39 @@ export default {
 
         if (isValidationOk) {
           this.focusElement("host");
+        }
+        isValidationOk = false;
+      }
+      if (!this.ldap_domain) {
+        this.error.ldap_domain = "common.required";
+
+        if (isValidationOk) {
+          this.focusElement("ldap_domain");
+        }
+        isValidationOk = false;
+      }
+      if (this.ldap_domain === "basic" && !this.auth_user) {
+        this.error.auth_user = "common.required";
+
+        if (isValidationOk) {
+          this.focusElement("auth_user");
+        }
+        isValidationOk = false;
+      }
+      if (this.ldap_domain === "basic" && !this.auth_pass) {
+        this.error.auth_pass = "common.required";
+
+        if (isValidationOk) {
+          this.focusElement("auth_user");
+        }
+        isValidationOk = false;
+      }
+      // verify the password is > 8 characters
+      if (this.auth_pass && this.auth_pass.length < 8) {
+        this.error.auth_pass = "common.password_length";
+
+        if (isValidationOk) {
+          this.focusElement("auth_pass");
         }
         isValidationOk = false;
       }
@@ -271,6 +356,9 @@ export default {
             host: this.host,
             lets_encrypt: this.isLetsEncryptEnabled,
             http2https: this.isHttpToHttpsEnabled,
+            auth_user: this.auth_user,
+            auth_pass: this.auth_pass,
+            ldap_domain: this.ldap_domain,
           },
           extra: {
             title: this.$t("settings.instance_configuration", {
