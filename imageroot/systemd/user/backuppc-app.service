@@ -24,7 +24,6 @@ ExecStartPre=/usr/local/bin/runagent discover-ldap
 ExecStart=/usr/bin/podman run --conmon-pidfile %t/backuppc-app.pid \
     --cidfile %t/backuppc-app.ctr-id --cgroups=no-conmon \
     --pod-id-file %t/backuppc.pod-id --replace -d --name  backuppc-app \
-    --hostname="${HOSTNAME}" \
     --volume data:/var/lib/backuppc:Z \
     --volume ./conf/etc/:/etc/backuppc:Z \
     --volume ./conf/home/:/home/backuppc:Z \
