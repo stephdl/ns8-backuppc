@@ -1,44 +1,15 @@
 # ns8-backuppc
 
-This is a template module for [NethServer 8](https://github.com/NethServer/ns8-core).
-To start a new module from it:
-
-1. Click on [Use this template](https://github.com/NethServer/ns8-backuppc/generate).
-   Name your repo with `ns8-` prefix (e.g. `ns8-mymodule`). 
-   Do not end your module name with a number, like ~~`ns8-baaad2`~~!
-
-1. Clone the repository, enter the cloned directory and
-   [configure your GIT identity](https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup#_your_identity)
-
-1. Rename some references inside the repo:
-   ```
-   modulename=$(basename $(pwd) | sed 's/^ns8-//') &&
-   git mv imageroot/systemd/user/backuppc.service imageroot/systemd/user/${modulename}.service &&
-   git mv imageroot/systemd/user/backuppc-app.service imageroot/systemd/user/${modulename}-app.service && 
-   git mv tests/backuppc.robot tests/${modulename}.robot &&
-   sed -i "s/backuppc/${modulename}/g" $(find .github/ * -type f) &&
-   git commit -a -m "Repository initialization"
-   ```
-
-1. Edit this `README.md` file, by replacing this section with your module
-   description
-
-1. Adjust `.github/workflows` to your needs. `clean-registry.yml` might
-   need the proper list of image names to work correctly. Unused workflows
-   can be disabled from the GitHub Actions interface.
-
-1. Commit and push your local changes
-
 ## Install
 
 Instantiate the module with:
 
-    add-module ghcr.io/nethserver/backuppc:latest 1
+    add-module ghcr.io/stephdl/backuppc:latest 1
 
 The output of the command will return the instance name.
 Output example:
 
-    {"module_id": "backuppc1", "image_name": "backuppc", "image_url": "ghcr.io/nethserver/backuppc:latest"}
+    {"module_id": "backuppc1", "image_name": "backuppc", "image_url": "ghcr.io/stephdl/backuppc:latest"}
 
 ## Configure
 
@@ -48,16 +19,21 @@ Launch `configure-module`, by setting the following parameters:
 - `host`: a fully qualified domain name for the application
 - `http2https`: enable or disable HTTP to HTTPS redirection (true/false)
 - `lets_encrypt`: enable or disable Let's Encrypt certificate (true/false)
-
+- ldap_domain: basic for no LDAP authentication or set a valid LDAP domain
+- auth_pass: password for basic authentication
+- auth_user: user for basic authentication
 
 Example:
 
 ```
 api-cli run configure-module --agent module/backuppc1 --data - <<EOF
 {
-  "host": "backuppc.domain.com",
-  "http2https": true,
-  "lets_encrypt": false
+    "host": "backuppc.domain.org",
+    "http2https": true,
+    "lets_encrypt": true,
+    "ldap_domain": "domain.org",
+    "auth_pass": "password",
+    "auth_user": "user"
 }
 EOF
 ```
@@ -72,12 +48,43 @@ You can retrieve the configuration with
 ```
 api-cli run get-configuration --agent module/backuppc1
 ```
+## test email
+
+once the mail notification has been set in the cluster the BackupPC module is allowed to send email, you can test to send an email with this command line
+
+Before to test it verify the `EMailFromUserName` to set it accordingly to your mail address.
+
+```
+runagent -m backuppc1 podman exec backuppc-app su -s /bin/sh backuppc -c '/usr/local/BackupPC/bin/BackupPC_sendEmail -u foo@domain.com'
+```
+
+## copy the backuppc rsa key to a linux host
+
+In order to use the rsync server to backup a linux host, yo have to send the rsa keys of backuppc to the remote host, this will allow to identify without password
+As a side note, to be able to restore the file and copy without ownership issue, the root user is needed.
+
+```
+runagent -m backuppc1  podman exec -ti backuppc-app su -s /bin/sh backuppc
+ssh-copy-id -i ~backuppc/.ssh/id_rsa.pub  root@192.168.1.10
+```
+
+## login to the container
+
+`runagent -m backuppc1  podman exec -ti backuppc-app bash`
+
+## become the user agent
+
+`runagent -m backuppc1`
 
 ## Uninstall
 
 To uninstall the instance:
 
     remove-module --no-preserve backuppc1
+
+# LDAP discovering
+
+the module can achieve alone to auto discovery the available LDAP provider, it is a mandatory for the self service restoration
 
 ## Smarthost setting discovery
 
@@ -98,60 +105,7 @@ See also the `systemd/user/backuppc.service` file.
 This setting discovery is just an example to understand how the module is
 expected to work: it can be rewritten or discarded completely.
 
-## Debug
 
-some CLI are needed to debug
-
-- The module runs under an agent that initiate a lot of environment variables (in /home/backuppc1/.config/state), it could be nice to verify them
-on the root terminal
-
-    `runagent -m backuppc1 env`
-
-- you can become runagent for testing scripts and initiate all environment variables
-  
-    `runagent -m backuppc1`
-
- the path become : 
-```
-    echo $PATH
-    /home/backuppc1/.config/bin:/usr/local/agent/pyenv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/usr/
-```
-
-- if you want to debug a container or see environment inside
- `runagent -m backuppc1`
- ```
-podman ps
-CONTAINER ID  IMAGE                                      COMMAND               CREATED        STATUS        PORTS                    NAMES
-d292c6ff28e9  localhost/podman-pause:4.6.1-1702418000                          9 minutes ago  Up 9 minutes  127.0.0.1:20015->80/tcp  80b8de25945f-infra
-d8df02bf6f4a  docker.io/library/mariadb:10.11.5          --character-set-s...  9 minutes ago  Up 9 minutes  127.0.0.1:20015->80/tcp  mariadb-app
-9e58e5bd676f  docker.io/library/nginx:stable-alpine3.17  nginx -g daemon o...  9 minutes ago  Up 9 minutes  127.0.0.1:20015->80/tcp  backuppc-app
-```
-
-you can see what environment variable is inside the container
-```
-podman exec  backuppc-app env
-PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-TERM=xterm
-PKG_RELEASE=1
-MARIADB_DB_HOST=127.0.0.1
-MARIADB_DB_NAME=backuppc
-MARIADB_IMAGE=docker.io/mariadb:10.11.5
-MARIADB_DB_TYPE=mysql
-container=podman
-NGINX_VERSION=1.24.0
-NJS_VERSION=0.7.12
-MARIADB_DB_USER=backuppc
-MARIADB_DB_PASSWORD=backuppc
-MARIADB_DB_PORT=3306
-HOME=/root
-```
-
-you can run a shell inside the container
-
-```
-podman exec -ti   backuppc-app sh
-/ # 
-```
 ## Testing
 
 Test the module using the `test-module.sh` script:
