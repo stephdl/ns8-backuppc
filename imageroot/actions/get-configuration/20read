@@ -22,8 +22,8 @@ config["host"] = os.getenv("TRAEFIK_HOST","")
 config["http2https"] = os.getenv("TRAEFIK_HTTP2HTTPS") == "True"
 config["lets_encrypt"] = os.getenv("TRAEFIK_LETS_ENCRYPT") == "True"
 config["ldap_domain"] = os.getenv("LDAP_DOMAIN","")
-config["auth_user"] = os.getenv("auth_user","")
-config["auth_password"] = os.getenv("auth_password","")
+config["auth_user"] = os.getenv("AUTH_USER","")
+config["auth_pass"] = os.getenv("AUTH_PASS","")
 
 # retrieve LDAP domains list
 lp = Ldapproxy()

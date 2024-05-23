@@ -53,8 +53,7 @@
         },
         "ldap_domain": {
             "type": "string",
-            "description": "LDAP domain name, like 'domain.org'",
-            "format": "hostname"
+            "description": "LDAP domain name, like 'domain.org'"
         },
         "auth_pass": {
             "type": "string",
