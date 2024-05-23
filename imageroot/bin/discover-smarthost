@@ -15,7 +15,7 @@ rdb = agent.redis_connect(use_replica=True)
 smtp_settings = agent.get_smarthost_settings(rdb)
 
 envfile = "smarthost.env"
-
+authentication = True if smtp_settings['username'] and smtp_settings['password'] else False
 # Using .tmp suffix: do not overwrite the target file until the new one is
 # saved to disk:
 with open(envfile + ".tmp", "w") as efp:
@@ -23,10 +23,16 @@ with open(envfile + ".tmp", "w") as efp:
     print(f"SMTP_ENABLED={'1' if smtp_settings['enabled'] else ''}", file=efp)
     print(f"SMTP_HOST={smtp_settings['host']}", file=efp)
     print(f"SMTP_PORT={smtp_settings['port']}", file=efp)
-    print(f"SMTP_USERNAME={smtp_settings['username']}", file=efp)
-    print(f"SMTP_PASSWORD={smtp_settings['password']}", file=efp)
-    print(f"SMTP_ENCRYPTION={smtp_settings['encrypt_smtp']}", file=efp)
-    print(f"SMTP_TLSVERIFY={'1' if smtp_settings['tls_verify'] else ''}", file=efp)
+    print(f"SMTP_AUTHENTICATION={'on' if authentication else 'none'}", file=efp)
+    print(f"SMTP_USER={smtp_settings['username']}", file=efp)
+    print(f"SMTP_PASS={smtp_settings['password']}", file=efp)
+    print(f"SMTP_TLS={'on' if smtp_settings['encrypt_smtp'] == 'tls' else 'off'}", file=efp)
+    print(f"SMTP_STARTTLS={'on' if smtp_settings['encrypt_smtp'] == 'starttls' else 'off'}", file=efp)
+    print(f"SMTP_TLSCERTCHECK={'on' if smtp_settings['tls_verify'] else 'off'}", file=efp)
+    print(f"SMTP_DOMAIN=%H", file=efp)
+    print("SMTP_MAILDOMAIN=%H", file=efp)
+    print(f"SMTP_AUTO_FROM={'TRUE' if '@gmail.com' in smtp_settings['username'] else 'FALSE' }", file=efp)
+
 
 # Commit changes by replacing the existing envfile:
 os.replace(envfile + ".tmp", envfile)
