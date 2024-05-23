@@ -13,7 +13,11 @@ import agent
 # If parsing fails, output everything to stderr
 data = json.load(sys.stdin)
 
-agent.set_env("LDAP_DOMAIN", data.get("ldap_domain", ""))
-agent.set_env("AUTH_METHOD", 'BASIC' if data.get("ldap_domain", "basic") == "basic" else 'LDAP')
+agent.set_env("LDAP_DOMAIN", data["ldap_domain"])
+agent.set_env("AUTH_METHOD", 'BASIC' if data["ldap_domain"] == "basic" else 'LDAP')
 agent.set_env("AUTH_PASS", data.get("auth_pass", ""))
 agent.set_env("AUTH_USER", data.get("auth_user", ""))
+
+# bind to the user domain
+if data["ldap_domain"] != "basic":
+    agent.bind_user_domains([data["ldap_domain"]])
