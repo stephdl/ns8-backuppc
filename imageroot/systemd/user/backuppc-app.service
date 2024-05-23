@@ -1,35 +1,36 @@
 #
-# Copyright (C) 2022 Nethesis S.r.l.
+# Copyright (C) 2024 Nethesis S.r.l.
 # SPDX-License-Identifier: GPL-3.0-or-later
 #
 
 [Unit]
 Description=Podman  backuppc-app.service
 BindsTo=backuppc.service
-After=backuppc.service mariadb-app.service
+After=backuppc.service
 
 [Service]
 Environment=PODMAN_SYSTEMD_UNIT=%n
 EnvironmentFile=%S/state/environment
 EnvironmentFile=-%S/state/smarthost.env
+ExecStartPre=/usr/local/bin/runagent discover-ldap
 WorkingDirectory=%S/state
 Restart=always
 TimeoutStopSec=70
-ExecStartPre=/bin/mkdir -p tmp
+ExecStartPre=/bin/mkdir -p ./conf/etc/ && /bin/mkdir -p ./conf/home
 ExecStartPre=/bin/rm -f %t/backuppc-app.pid %t/backuppc-app.ctr-id
 ExecStartPre=-runagent discover-smarthost
+ExecStartPre=/usr/local/bin/runagent discover-ldap
 ExecStart=/usr/bin/podman run --conmon-pidfile %t/backuppc-app.pid \
     --cidfile %t/backuppc-app.ctr-id --cgroups=no-conmon \
     --pod-id-file %t/backuppc.pod-id --replace -d --name  backuppc-app \
-    --volume backuppc-app:/var/www/html/:Z \
-    --volume ./tmp:/tmp:Z \
-    --env=MARIADB_* \
-    --env MARIADB_DB_TYPE=mysql \
-    --env MARIADB_DB_HOST=127.0.0.1 \
-    --env MARIADB_DB_PORT=3306 \
-    --env MARIADB_DB_USER=backuppc \
-    --env MARIADB_DB_PASSWORD=backuppc \
-    --env MARIADB_DB_NAME=backuppc \
+    --volume data:/var/lib/backuppc:Z \
+    --volume ./conf/etc/:/etc/backuppc:Z \
+    --volume ./conf/home/:/home/backuppc:Z \
+    --volume ./conf/home/:/home/backuppc:Z \
+    --env NGINX_AUTHENTICATION_TYPE=BASIC \
+    --env  NGINX_AUTHENTICATION_BASIC_USER1=backuppc \
+    --env NGINX_AUTHENTICATION_BASIC_PASS1=backuppc \
+    -env DEBUG_MODE=FALSE \
     ${NGINX_IMAGE}
 ExecStop=/usr/bin/podman stop --ignore --cidfile %t/backuppc-app.ctr-id -t 10
 ExecReload=/usr/bin/podman kill -s HUP backuppc-app
