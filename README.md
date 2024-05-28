@@ -68,6 +68,14 @@ runagent -m backuppc1  podman exec -ti backuppc-app su -s /bin/sh backuppc
 ssh-copy-id -i ~backuppc/.ssh/id_rsa.pub  root@192.168.1.10
 ```
 
+## rsyncd on your windows client
+
+Download and run cygwin-rsyncd-3.2.3.0_installer.exe to install rsyncd on your WinXX client for doing BackupPC backups.
+
+See the customized version in the BackupPC repository : https://github.com/backuppc/cygwin-rsyncd
+
+Or you can either install the version from cygwin : https://www.cygwin.com/
+
 ## login to the container
 
 `runagent -m backuppc1  podman exec -ti backuppc-app bash`
