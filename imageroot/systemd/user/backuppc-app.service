@@ -29,7 +29,6 @@ ExecStart=/usr/bin/podman run --conmon-pidfile %t/backuppc-app.pid \
     --volume data:/var/lib/backuppc:Z \
     --volume ./conf/etc/:/etc/backuppc:Z \
     --volume ./conf/home/:/home/backuppc:Z \
-    --volume ./conf/home/:/home/backuppc:Z \
     --volume logs:/www/logs:Z \
     --env NGINX_AUTHENTICATION_TYPE=${AUTH_METHOD} \
     --env NGINX_AUTHENTICATION_BASIC_USER1=${AUTH_USER} \
