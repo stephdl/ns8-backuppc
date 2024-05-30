@@ -17,8 +17,6 @@ ExecStartPre=/usr/local/bin/runagent discover-ldap
 WorkingDirectory=%S/state
 Restart=always
 TimeoutStopSec=70
-ExecStartPre=/bin/mkdir -p ./conf/etc
-ExecStartPre=/bin/mkdir -p ./conf/home
 ExecStartPre=/bin/rm -f %t/backuppc-app.pid %t/backuppc-app.ctr-id
 ExecStartPre=-runagent discover-smarthost
 ExecStartPre=/usr/local/bin/runagent discover-ldap
@@ -27,8 +25,8 @@ ExecStart=/usr/bin/podman run --conmon-pidfile %t/backuppc-app.pid \
     --pod-id-file %t/backuppc.pod-id --replace -d --name  backuppc-app \
     --cap-add NET_RAW \
     --volume data:/var/lib/backuppc:Z \
-    --volume ./conf/etc/:/etc/backuppc:Z \
-    --volume ./conf/home/:/home/backuppc:Z \
+    --volume conf:/etc/backuppc:Z \
+    --volume home:/home/backuppc:Z \
     --volume logs:/www/logs:Z \
     --env NGINX_AUTHENTICATION_TYPE=${AUTH_METHOD} \
     --env NGINX_AUTHENTICATION_BASIC_USER1=${AUTH_USER} \
