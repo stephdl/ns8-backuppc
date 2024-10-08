@@ -52,7 +52,7 @@ api-cli run get-configuration --agent module/backuppc1
 
 once the mail notification has been set in the cluster the BackupPC module is allowed to send email, you can test to send an email with this command line
 
-Before to test it verify the `EMailFromUserName` to set it accordingly to your mail address.
+Before testing, verify the EMailFromUserName setting (available in the BackupPC UI) and adjust it to match your email address.
 
 ```
 runagent -m backuppc1 podman exec backuppc-app su -s /bin/sh backuppc -c '/usr/local/BackupPC/bin/BackupPC_sendEmail -u foo@domain.com'
