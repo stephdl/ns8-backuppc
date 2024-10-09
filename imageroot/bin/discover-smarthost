@@ -23,7 +23,7 @@ with open(envfile + ".tmp", "w") as efp:
     print(f"SMTP_ENABLED={'1' if smtp_settings['enabled'] else ''}", file=efp)
     print(f"SMTP_HOST={smtp_settings['host']}", file=efp)
     print(f"SMTP_PORT={smtp_settings['port']}", file=efp)
-    print(f"SMTP_AUTHENTICATION={'on' if authentication else 'none'}", file=efp)
+    print(f"SMTP_AUTHENTICATION={'on' if authentication else 'off'}", file=efp)
     print(f"SMTP_USER={smtp_settings['username']}", file=efp)
     print(f"SMTP_FROM={smtp_settings['username']}", file=efp)
     print(f"SMTP_PASS={smtp_settings['password']}", file=efp)
