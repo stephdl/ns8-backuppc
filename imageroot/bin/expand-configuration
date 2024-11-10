@@ -1,0 +1,83 @@
+#!/bin/bash
+
+#
+# Copyright (C) 2024 Nethesis S.r.l.
+# SPDX-License-Identifier: GPL-3.0-or-later
+#
+
+# expand file configuration for backuppc
+set -e
+
+# Redirect any output to the journal (stderr)
+exec 1>&2
+
+# nginx configuration file
+CONFIG_FILE="../conf.d/backuppc.conf"
+
+mkdir -p ../conf.d
+
+# Choose the template based on the LDAP_DOMAIN value
+if [[ "$LDAP_DOMAIN" != "basic" ]]; then
+    TEMPLATE='server {
+    auth_ldap "Please login";
+    auth_ldap_servers ldapserver;
+    ### Do not Touch This
+    listen 80;
+    server_name localhost;
+    root /www/html;
+    ###
+
+    index /index.cgi;
+
+    location / {
+        location ~ \.cgi$ {
+            include fastcgi_params;
+            fastcgi_pass unix:/var/run/fcgiwrap.sock;
+
+            ## Always force backuppc
+            fastcgi_param REMOTE_ADDR     $remote_addr;
+            fastcgi_param REMOTE_USER     $remote_user;
+            fastcgi_param SCRIPT_FILENAME /www/cgi-bin/BackupPC/BackupPC_Admin;
+        }
+    }
+
+    ### Do not edit past here
+    include /etc/nginx/snippets/site_optimization.conf;
+    include /etc/nginx/snippets/exploit_protection.conf;
+}
+'
+else
+    TEMPLATE='server {
+    auth_basic "Please login";
+    auth_basic_user_file /etc/nginx/snippets/authentication/basic_authorized_users;
+      ### Do not Touch This
+      listen 80;
+      server_name localhost;
+      root /www/html;
+      ###
+
+      index /index.cgi;
+
+      location / {
+    	  location ~ \.cgi$ {
+	        include fastcgi_params;
+	        fastcgi_pass unix:/var/run/fcgiwrap.sock;
+
+          ## Always force backuppc
+	        fastcgi_param REMOTE_ADDR     $remote_addr;
+	        fastcgi_param REMOTE_USER     backuppc;
+	        fastcgi_param SCRIPT_FILENAME /www/cgi-bin/BackupPC/BackupPC_Admin;
+        }
+      }
+
+      ### Do not edit past here
+      include /etc/nginx/snippets/site_optimization.conf;
+      include /etc/nginx/snippets/exploit_protection.conf;
+}
+'
+fi
+
+# Write the chosen template to the config file
+echo "$TEMPLATE" > "$CONFIG_FILE"
+
+echo "Configuration file created at $CONFIG_FILE"
