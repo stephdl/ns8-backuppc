@@ -48,6 +48,14 @@ You can retrieve the configuration with
 ```
 api-cli run get-configuration --agent module/backuppc1
 ```
+
+
+## Administrator of the CGI user interface
+
+By default, only `backuppc` and `administrator` are granted administrative privileges in the CGI UI. If you want to add more users, you can define them in the `$Conf{CgiAdminUsers}` setting (Edit config > CGI). For more details, see the [BackupPC Documentation](https://backuppc.github.io/backuppc/BackupPC.html#_conf_cgiadminusers_).
+
+Currently, it is not possible to read the LDAP group name; you must declare all administrators by their username or login.
+
 ## test email
 
 Once the mail notification is configured in the cluster, the BackupPC module can send emails. You can test this by sending an email using the command line.
