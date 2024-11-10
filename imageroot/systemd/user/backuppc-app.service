@@ -36,7 +36,7 @@ ExecStart=/usr/bin/podman run --conmon-pidfile %t/backuppc-app.pid \
     --env SMTP_* \
     --env NGINX_* \
     ${BACKUPPC_IMAGE}
-ExecStartPost=podman exec backuppc-app sed -i "s/\$Conf{CgiAdminUsers} = 'backuppc';/\$Conf{CgiAdminUsers} = 'backuppc administrator';/g" /etc/backuppc/config.pl
+ExecStartPost=podman exec backuppc-app sed -i "s/\\\$Conf{CgiAdminUsers} = 'backuppc';/\\\$Conf{CgiAdminUsers} = 'backuppc administrator';/g" /etc/backuppc/config.pl
 ExecStop=/usr/bin/podman stop --ignore --cidfile %t/backuppc-app.ctr-id -t 10
 ExecReload=/usr/bin/podman kill -s HUP backuppc-app
 SyslogIdentifier=%u
