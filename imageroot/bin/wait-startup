@@ -1,0 +1,30 @@
+#!/bin/bash
+
+#
+# Copyright (C) 2024 Nethesis S.r.l.
+# SPDX-License-Identifier: GPL-3.0-or-later
+#
+
+# expand file configuration for backuppc
+set -e
+
+# Redirect any output to the journal (stderr)
+exec 1>&2
+# Name of the container and path to check
+CONTAINER_NAME="backuppc-app"
+FILE_PATH="/etc/backuppc/config.pl"
+
+# Count from 1 to 60 with a 1-second interval between each number
+for i in {1..60}; do
+    echo "Count: $i"
+
+    # Check if the file exists in the container
+    if podman exec "$CONTAINER_NAME" test -f "$FILE_PATH"; then
+        echo "File $FILE_PATH found in the container. Exiting."
+        exit 0
+    fi
+
+    # Wait for 1 second before the next iteration
+    sleep 1
+    echo "Waiting for the file $FILE_PATH to be created in the container.: $i seconds"
+done
