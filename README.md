@@ -49,6 +49,9 @@ You can retrieve the configuration with
 api-cli run get-configuration --agent module/backuppc1
 ```
 
+## Backup
+
+Only the volumes/logs, volumes/conf, and volumes/home directories are included in the NetheServer backup. The volumes/data directory is excluded to prevent the restic backup size from increasing excessively.
 
 ## Administrator of the CGI user interface
 
