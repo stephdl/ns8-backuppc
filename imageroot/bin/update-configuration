@@ -1,0 +1,15 @@
+#!/bin/bash
+
+#
+# Copyright (C) 2024 Nethesis S.r.l.
+# SPDX-License-Identifier: GPL-3.0-or-later
+#
+
+# expand file configuration for backuppc
+set -e
+
+# Redirect any output to the journal (stderr)
+exec 1>&2
+
+
+/usr/bin/podman exec backuppc-app sed -i "s/\\\$Conf{CgiAdminUsers} = 'backuppc';/\\\$Conf{CgiAdminUsers} = 'backuppc administrator';/g" /etc/backuppc/config.pl
