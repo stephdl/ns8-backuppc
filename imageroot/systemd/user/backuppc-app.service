@@ -19,6 +19,7 @@ TimeoutStopSec=70
 ExecStartPre=/bin/rm -f %t/backuppc-app.pid %t/backuppc-app.ctr-id
 ExecStartPre=-runagent discover-smarthost
 ExecStartPre=/usr/local/bin/runagent discover-ldap
+ExecStartPre=/usr/local/bin/runagent expand-configuration
 ExecStart=/usr/bin/podman run --conmon-pidfile %t/backuppc-app.pid \
     --cidfile %t/backuppc-app.ctr-id --cgroups=no-conmon \
     --pod-id-file %t/backuppc.pod-id --replace -d --name  backuppc-app \
@@ -27,6 +28,7 @@ ExecStart=/usr/bin/podman run --conmon-pidfile %t/backuppc-app.pid \
     --volume conf:/etc/backuppc:Z \
     --volume home:/home/backuppc:Z \
     --volume logs:/www/logs:Z \
+    --volume %S/conf.d/backuppc.conf:/etc/nginx/sites.available/backuppc.conf:Z \
     --env NGINX_AUTHENTICATION_TYPE=${AUTH_METHOD} \
     --env NGINX_AUTHENTICATION_BASIC_USER1=${AUTH_USER} \
     --env NGINX_AUTHENTICATION_BASIC_PASS1=${AUTH_PASS} \
@@ -34,6 +36,7 @@ ExecStart=/usr/bin/podman run --conmon-pidfile %t/backuppc-app.pid \
     --env SMTP_* \
     --env NGINX_* \
     ${BACKUPPC_IMAGE}
+ExecStartPost=podman exec backuppc-app sed -i "s/\$Conf{CgiAdminUsers} = 'backuppc';/\$Conf{CgiAdminUsers} = 'backuppc administrator';/g" /etc/backuppc/config.pl
 ExecStop=/usr/bin/podman stop --ignore --cidfile %t/backuppc-app.ctr-id -t 10
 ExecReload=/usr/bin/podman kill -s HUP backuppc-app
 SyslogIdentifier=%u
