@@ -1,57 +1,79 @@
 {
-    "error": {
-        "403": "Operation nicht zugelassen",
-        "cannot_retrieve_installed_modules": "installierte Module nicht abrufbar",
-        "401": "fehlerhafte Anmeldung",
-        "cannot_retrieve_module_info": "Modulinfo nicht abrufbar",
-        "generic_error": "Etwas ist schief gegangen",
-        "error": "Fehler",
-        "network_timeout": "Netzwerk Timeout",
-        "404": "Ressource nicht gefunden",
-        "network_error": "Netzwerkfehler",
-        "validation_error": "Fehlerhafte Prüfung"
-    },
-    "settings": {
-        "test_field": "Testfeld",
-        "configure_instance": "{instance} konfigurieren",
-        "save": "Speichern",
-        "title": "Einstellungen"
-    },
-    "common": {
-        "required": "erforderlich",
-        "work_in_progress": "In Arbeit",
-        "processing": "Ausführung..."
-    },
-    "status": {
-        "created": "erstellt",
-        "size": "Größe",
-        "name": "Name",
-        "no_images": "Keine Abbilder",
-        "app_volumes": "App Volumen | App Volumen",
-        "services": "Dienst | Dienste",
-        "app_images": "App-Abbild | App-Abbilder",
-        "no_services": "Keine Dienste",
-        "app_instance": "App-Instanz",
-        "mount": "Einbindepunkt",
-        "title": "Status",
-        "installation_node": "Knoten der Installation",
-        "node": "Knoten",
-        "no_volumes": "keine Volumen"
-    },
-    "about": {
-        "title": "Über"
-    },
-    "action": {
-        "list-backup-repositories": "Liste der Datensicherungs-Speicherort",
-        "get-module-info": "Informationen zum Modul abrufen",
-        "list-installed-modules": "installierte Module auflisten",
-        "list-backups": "Datensicherungen auflisten",
-        "get-status": "Status abfragen",
-        "configure-module": "Modul konfigurieren",
-        "get-configuration": "Konfiguration abrufen",
-        "get-name": "Name abrufen"
-    },
-    "task": {
-        "cannot_create_task": "{task} kann nicht erstellt werden"
-    }
+  "common": {
+    "required": "Erforderlich",
+    "work_in_progress": "In Arbeit",
+    "processing": "Wird verarbeitet...",
+    "password_length": "Das Passwort muss mindestens 8 Zeichen lang sein"
+  },
+  "status": {
+    "title": "Status",
+    "app_instance": "App-Instanz",
+    "services": "Dienst | Dienste",
+    "app_images": "App-Bild | App-Bilder",
+    "app_volumes": "App-Volumen | App-Volumen",
+    "installation_node": "Installationsknoten",
+    "node": "Knoten",
+    "name": "Name",
+    "size": "Größe",
+    "created": "Erstellt",
+    "mount": "Einbinden",
+    "no_services": "Keine Dienste",
+    "no_images": "Keine Bilder",
+    "no_volumes": "Keine Volumen",
+    "backuppc_webapp": "backuppc Web-App",
+    "not_configured": "Nicht konfiguriert",
+    "open_webapp": "backuppc öffnen",
+    "configure": "Konfigurieren"
+  },
+  "settings": {
+    "title": "Einstellungen",
+    "configure_instance": "{instance} konfigurieren",
+    "save": "Speichern",
+    "backuppc_fqdn": "backuppc Hostname (FQDN)",
+    "lets_encrypt": "LE-Zertifikat anfordern",
+    "http_to_https": "HTTPS erzwingen",
+    "enabled": "Aktiviert",
+    "disabled": "Deaktiviert",
+    "advanced": "Erweitert",
+    "configuring": "Wird konfiguriert",
+    "instance_configuration": "backuppc konfigurieren",
+    "domain_already_used_in_traefik": "Domäne bereits in Traefik verwendet",
+    "host_pattern": "Muss ein gültiger vollständig qualifizierter Domainname sein",
+    "host_format": "Muss ein gültiger vollständig qualifizierter Domainname sein",
+    "user_domains_list": "Benutzerdomänenliste",
+    "choose_user_domain": "Wählen Sie LDAP oder grundlegende Authentifizierung",
+    "choose_the_user_domain_to_use": "Sie können entscheiden, ob Sie eine LDAP-basierte Authentifizierung oder eine grundlegende Authentifizierung für nur einen Administrator verwenden möchten",
+    "auth_username": "Benutzername",
+    "auth_password": "Passwort",
+    "basic_authentication": "Grundlegende Authentifizierung"
+  },
+  "about": {
+    "title": "Über"
+  },
+  "task": {
+    "cannot_create_task": "Kann Aufgabe {action} nicht erstellen"
+  },
+  "action": {
+    "get-status": "Status abrufen",
+    "get-configuration": "Konfiguration abrufen",
+    "configure-module": "Modul konfigurieren",
+    "get-module-info": "Modulinformationen abrufen",
+    "get-name": "Name abrufen",
+    "list-backup-repositories": "Backup-Repositories auflisten",
+    "list-backups": "Backups auflisten",
+    "list-installed-modules": "Installierte Module auflisten"
+  },
+  "error": {
+    "error": "Fehler",
+    "generic_error": "Etwas ist schiefgelaufen",
+    "validation_error": "Validierungsfehler",
+    "network_error": "Netzwerkfehler",
+    "network_timeout": "Netzwerkzeitüberschreitung",
+    "401": "Ungültige Authentifizierung",
+    "403": "Vorgang nicht autorisiert",
+    "404": "Ressource nicht gefunden",
+    "cannot_retrieve_module_info": "Modulinformationen können nicht abgerufen werden",
+    "cannot_retrieve_installed_modules": "Installierte Module können nicht abgerufen werden",
+    "cannot_retrieve_configuration": "Konfiguration kann nicht abgerufen werden"
+  }
 }

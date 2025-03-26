@@ -1,0 +1,79 @@
+{
+  "common": {
+    "required": "مطلوب",
+    "work_in_progress": "جارٍ العمل",
+    "processing": "جاري المعالجة...",
+    "password_length": "يجب أن يكون كلمة المرور مكونة من 8 أحرف على الأقل"
+  },
+  "status": {
+    "title": "الحالة",
+    "app_instance": "مثيل التطبيق",
+    "services": "خدمة | خدمات",
+    "app_images": "صورة التطبيق | صور التطبيقات",
+    "app_volumes": "حجم التطبيق | أحجام التطبيقات",
+    "installation_node": "نقطة التثبيت",
+    "node": "العقدة",
+    "name": "الاسم",
+    "size": "الحجم",
+    "created": "تم الإنشاء",
+    "mount": "تركيب",
+    "no_services": "لا توجد خدمات",
+    "no_images": "لا توجد صور",
+    "no_volumes": "لا توجد أحجام",
+    "backuppc_webapp": "تطبيق backuppc على الويب",
+    "not_configured": "غير مكون",
+    "open_webapp": "فتح backuppc",
+    "configure": "إعداد"
+  },
+  "settings": {
+    "title": "الإعدادات",
+    "configure_instance": "إعداد {instance}",
+    "save": "حفظ",
+    "backuppc_fqdn": "اسم مضيف backuppc (FQDN)",
+    "lets_encrypt": "طلب شهادة LE",
+    "http_to_https": "فرض HTTPS",
+    "enabled": "مفعل",
+    "disabled": "معطل",
+    "advanced": "متقدم",
+    "configuring": "يتم الإعداد",
+    "instance_configuration": "إعداد backuppc",
+    "domain_already_used_in_traefik": "النطاق مستخدم بالفعل في traefik",
+    "host_pattern": "يجب أن يكون اسم نطاق مؤهل بالكامل",
+    "host_format": "يجب أن يكون اسم نطاق مؤهل بالكامل",
+    "user_domains_list": "قائمة النطاقات للمستخدمين",
+    "choose_user_domain": "اختر LDAP أو المصادقة الأساسية",
+    "choose_the_user_domain_to_use": "يمكنك اختيار استخدام المصادقة بناءً على LDAP أو مصادقة أساسية لمدير واحد فقط",
+    "auth_username": "اسم المستخدم",
+    "auth_password": "كلمة المرور",
+    "basic_authentication": "المصادقة الأساسية"
+  },
+  "about": {
+    "title": "حول"
+  },
+  "task": {
+    "cannot_create_task": "لا يمكن إنشاء المهمة {action}"
+  },
+  "action": {
+    "get-status": "الحصول على الحالة",
+    "get-configuration": "الحصول على الإعدادات",
+    "configure-module": "إعداد الوحدة",
+    "get-module-info": "الحصول على معلومات الوحدة",
+    "get-name": "الحصول على الاسم",
+    "list-backup-repositories": "قائمة مستودعات النسخ الاحتياطي",
+    "list-backups": "قائمة النسخ الاحتياطية",
+    "list-installed-modules": "قائمة الوحدات المثبتة"
+  },
+  "error": {
+    "error": "خطأ",
+    "generic_error": "حدث خطأ ما",
+    "validation_error": "خطأ في التحقق",
+    "network_error": "خطأ في الشبكة",
+    "network_timeout": "انتهاء مهلة الشبكة",
+    "401": "مصادقة غير صالحة",
+    "403": "العملية غير مصرح بها",
+    "404": "المورد غير موجود",
+    "cannot_retrieve_module_info": "تعذر استرداد معلومات الوحدة",
+    "cannot_retrieve_installed_modules": "تعذر استرداد الوحدات المثبتة",
+    "cannot_retrieve_configuration": "تعذر استرداد الإعدادات"
+  }
+}
