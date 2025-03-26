@@ -1,57 +1,79 @@
 {
-    "common": {
-        "required": "Obbligatorio",
-        "processing": "Elaborazione in corso...",
-        "work_in_progress": "In lavorazione"
-    },
-    "status": {
-        "node": "Nodo",
-        "services": "Servizio | Servizi",
-        "no_volumes": "Nessun volume",
-        "title": "Stato",
-        "name": "Nome",
-        "size": "Dimensione",
-        "created": "Creato",
-        "no_services": "Nessun servizio",
-        "no_images": "Nessuna immagine",
-        "app_images": "Immagine app|Immagini app",
-        "app_instance": "Istanza app",
-        "app_volumes": "Volume app|Volumi app",
-        "installation_node": "Nodo",
-        "mount": "Percorso di mount"
-    },
-    "settings": {
-        "save": "Salva",
-        "title": "Impostazioni",
-        "configure_instance": "Configura {instance}",
-        "test_field": "Campo di test"
-    },
-    "error": {
-        "error": "Errore",
-        "404": "Risorsa non trovata",
-        "validation_error": "Errore di validazione",
-        "network_error": "Errore di rete",
-        "cannot_retrieve_installed_modules": "Impossibile elencare moduli installati",
-        "cannot_retrieve_module_info": "Impossibile recuperare info modulo",
-        "network_timeout": "Timeout di rete",
-        "generic_error": "Qualcosa è andato storto",
-        "401": "Autenticazione non valida",
-        "403": "Operazione non autorizzata"
-    },
-    "action": {
-        "configure-module": "Configura modulo",
-        "get-configuration": "Visualizza configurazione",
-        "get-status": "Visualizza stato",
-        "get-module-info": "Visualizza info modulo",
-        "get-name": "Visualizza nome",
-        "list-backup-repositories": "Elenca repository di backup",
-        "list-backups": "Elenca backup",
-        "list-installed-modules": "Elenco moduli installati"
-    },
-    "task": {
-        "cannot_create_task": "Impossibile eseguire task {action}"
-    },
-    "about": {
-        "title": "Informazioni"
-    }
+  "common": {
+    "required": "Richiesto",
+    "work_in_progress": "Lavoro in corso",
+    "processing": "Elaborazione in corso...",
+    "password_length": "La password deve essere lunga almeno 8 caratteri"
+  },
+  "status": {
+    "title": "Stato",
+    "app_instance": "Istanza dell'applicazione",
+    "services": "Servizio | Servizi",
+    "app_images": "Immagine dell'app | Immagini dell'app",
+    "app_volumes": "Volume dell'app | Volumi dell'app",
+    "installation_node": "Nodo di installazione",
+    "node": "Nodo",
+    "name": "Nome",
+    "size": "Dimensione",
+    "created": "Creato",
+    "mount": "Montare",
+    "no_services": "Nessun servizio",
+    "no_images": "Nessuna immagine",
+    "no_volumes": "Nessun volume",
+    "backuppc_webapp": "Applicazione web backuppc",
+    "not_configured": "Non configurato",
+    "open_webapp": "Apri backuppc",
+    "configure": "Configura"
+  },
+  "settings": {
+    "title": "Impostazioni",
+    "configure_instance": "Configura {instance}",
+    "save": "Salva",
+    "backuppc_fqdn": "Nome host backuppc (FQDN)",
+    "lets_encrypt": "Richiedi certificato LE",
+    "http_to_https": "Forza HTTPS",
+    "enabled": "Abilitato",
+    "disabled": "Disabilitato",
+    "advanced": "Avanzato",
+    "configuring": "In configurazione",
+    "instance_configuration": "Configura backuppc",
+    "domain_already_used_in_traefik": "Dominio già utilizzato in traefik",
+    "host_pattern": "Deve essere un nome di dominio completamente qualificato valido",
+    "host_format": "Deve essere un nome di dominio completamente qualificato valido",
+    "user_domains_list": "Elenco dei domini utente",
+    "choose_user_domain": "Scegli l'autenticazione LDAP o di base",
+    "choose_the_user_domain_to_use": "Puoi decidere di utilizzare l'autenticazione basata su LDAP o l'autenticazione di base per un solo amministratore",
+    "auth_username": "Nome utente",
+    "auth_password": "Password",
+    "basic_authentication": "Autenticazione di base"
+  },
+  "about": {
+    "title": "Informazioni"
+  },
+  "task": {
+    "cannot_create_task": "Impossibile creare il task {action}"
+  },
+  "action": {
+    "get-status": "Ottieni stato",
+    "get-configuration": "Ottieni configurazione",
+    "configure-module": "Configura modulo",
+    "get-module-info": "Ottieni informazioni modulo",
+    "get-name": "Ottieni nome",
+    "list-backup-repositories": "Elenca i repository di backup",
+    "list-backups": "Elenca i backup",
+    "list-installed-modules": "Elenca i moduli installati"
+  },
+  "error": {
+    "error": "Errore",
+    "generic_error": "Qualcosa è andato storto",
+    "validation_error": "Errore di validazione",
+    "network_error": "Errore di rete",
+    "network_timeout": "Timeout di rete",
+    "401": "Autenticazione non valida",
+    "403": "Operazione non autorizzata",
+    "404": "Risorsa non trovata",
+    "cannot_retrieve_module_info": "Impossibile recuperare le informazioni del modulo",
+    "cannot_retrieve_installed_modules": "Impossibile recuperare i moduli installati",
+    "cannot_retrieve_configuration": "Impossibile recuperare la configurazione"
+  }
 }
