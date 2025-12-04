@@ -1,7 +1,8 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:base"],
-  "ignorePaths": ["**/ui/**", "**/.devcontainer/**"],
+  "extends": [
+    "local>NethServer/.github:ns8"
+  ],
   "regexManagers": [
     {
       "fileMatch": ["build-images.sh"],
