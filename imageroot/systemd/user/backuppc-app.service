@@ -24,10 +24,10 @@ ExecStart=/usr/bin/podman run --conmon-pidfile %t/backuppc-app.pid \
     --cidfile %t/backuppc-app.ctr-id --cgroups=no-conmon \
     --pod-id-file %t/backuppc.pod-id --replace -d --name  backuppc-app \
     --cap-add NET_RAW \
-    --volume data:/var/lib/backuppc:Z \
-    --volume conf:/etc/backuppc:Z \
-    --volume home:/home/backuppc:Z \
-    --volume logs:/www/logs:Z \
+    --volume data:/var/lib/backuppc \
+    --volume conf:/etc/backuppc:z \
+    --volume home:/home/backuppc:z \
+    --volume logs:/www/logs:z \
     --volume %S/conf.d/backuppc.conf:/etc/nginx/sites.available/backuppc.conf:Z \
     --env NGINX_AUTHENTICATION_TYPE=${AUTH_METHOD} \
     --env NGINX_AUTHENTICATION_BASIC_USER1=${AUTH_USER} \
