@@ -35,7 +35,7 @@ ExecStart=/usr/bin/podman run --conmon-pidfile %t/backuppc-app.pid \
     --env DEBUG_MODE=FALSE \
     --env SMTP_* \
     --env NGINX_* \
-    ${BACKUPPC_IMAGE}
+    ${DOCKER_BACKUPPC_IMAGE}
 ExecStartPost=/usr/local/bin/runagent ../bin/wait-startup
 ExecStartPost=/usr/local/bin/runagent ../bin/update-configuration
 ExecStop=/usr/bin/podman stop --ignore --cidfile %t/backuppc-app.ctr-id -t 10
