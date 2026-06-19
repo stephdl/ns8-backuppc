@@ -39,7 +39,7 @@ buildah config --entrypoint=/ \
     --label="org.nethserver.tcp-ports-demand=1" \
     --label="org.nethserver.rootfull=0" \
     --label="org.nethserver.volumes=data" \
-    --label="org.nethserver.images=docker.io/tiredofit/backuppc:6.0.4" \
+    --label="org.nethserver.images=ghcr.io/stephdl/docker-backuppc:6.0.4" \
     "${container}"
 # Commit the image
 buildah commit "${container}" "${repobase}/${reponame}"
