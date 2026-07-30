@@ -40,6 +40,7 @@ buildah config --entrypoint=/ \
     --label="org.nethserver.rootfull=0" \
     --label="org.nethserver.volumes=data" \
     --label="org.nethserver.images=ghcr.io/stephdl/docker-backuppc:6.0.4" \
+    --label="org.nethserver.min-core=3.20.1" \
     "${container}"
 # Commit the image
 buildah commit "${container}" "${repobase}/${reponame}"
