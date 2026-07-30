@@ -29,7 +29,7 @@ buildah run \
     --workingdir=/usr/src/ui \
     --env="NODE_OPTIONS=--openssl-legacy-provider" \
     nodebuilder-backuppc \
-    sh -c "yarn install && yarn build"
+    sh -c "corepack enable && yarn install && yarn build"
 
 # Add imageroot directory to the container image
 buildah add "${container}" imageroot /imageroot
@@ -40,6 +40,7 @@ buildah config --entrypoint=/ \
     --label="org.nethserver.rootfull=0" \
     --label="org.nethserver.volumes=data" \
     --label="org.nethserver.images=ghcr.io/stephdl/docker-backuppc:6.0.4" \
+    --label="org.nethserver.min-core=3.20.1" \
     "${container}"
 # Commit the image
 buildah commit "${container}" "${repobase}/${reponame}"
