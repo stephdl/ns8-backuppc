@@ -24,11 +24,6 @@ on:
         required: false
         default: false
         type: boolean
-      ui_tests:
-        description: "Run the cases tagged ui and publish their screenshots"
-        required: false
-        default: false
-        type: boolean
 
 # github.ref is the default branch under workflow_run, so it cannot key this.
 concurrency:
@@ -93,10 +88,6 @@ jobs:
       image_url: ${{ needs.module.outputs.image }}
       repo_ref: ${{ needs.module.outputs.sha }}
       version_tag: ${{ needs.module.outputs.tag }}
-      # Empty: run the shared runner of ns8-ci-actions rather than a copy here
-      script: ""
-      # One leg only: each one that carries the flag comments on the pull request
-      run_ui_tests: ${{ matrix.distro == 'rocky9' && needs.ui_tests.outputs.needed == 'true' }}
       # Empty: run the shared runner of ns8-ci-actions rather than a copy here
       script: ""
       # One leg only: each one that carries the flag comments on the pull request
